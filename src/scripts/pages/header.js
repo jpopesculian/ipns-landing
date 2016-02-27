@@ -1,7 +1,6 @@
-mport {hJSX} from '@cycle/dom'
+import {hJSX} from '@cycle/dom'
 import isolate from '@cycle/isolate'
 import {Observable} from 'rx'
-import SolarSystem from 'app/components/solar-system'
 
 const intent = (DOM) => {
   return {}
@@ -11,13 +10,11 @@ const model = (actions) => {
   return Observable.just({})
 }
 
-const view = (state$, DOM) => {
-  const solarSystem = SolarSystem({DOM, prop$: Observable.just({})})
+const view = (state$) => {
   return state$
-    .withLatestFrom(solarSystem.DOM, (solarSystemVTree, state) => {
+    .map((state) => {
         return (
         <section id="header-page">
-            {{solarSystemVTree}}
         </section>
         )
     })

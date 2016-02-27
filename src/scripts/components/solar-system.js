@@ -13,7 +13,7 @@ const model = (actions) => {
 const view = (state$) => {
   return state$.map((state) => {
     return (
-	<div className='solar-syst'>
+	<div className='solar-syst loaded'>
 		<div className='sun'></div>
 		<div className='mercury'></div>
 		<div className='venus'></div>

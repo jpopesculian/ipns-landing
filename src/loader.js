@@ -4,6 +4,7 @@ window._onLoad = (function(window, document) {
   var fontsLoaded = false;
 
   var endTransition = function() {
+      document.getElementById("solar-system").className="loaded";
   };
 
   return {
