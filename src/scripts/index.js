@@ -1,14 +1,16 @@
 import Cycle from '@cycle/core'
 import {makeDOMDriver, hJSX} from '@cycle/dom'
+import HeaderPage from 'app/pages/header'
 
 function main({DOM}) {
 
-  const view = sources.DOM
-    .map(() => {
+  const headerPage = HeaderPage({DOM})
+  const view = headerPage.DOM
+    .map((headerVTree) => {
       return (
-        <h1>
-            Hello World
-        </h1>
+        <div>
+          {headerVTree}
+        </div>
       )
     })
 
