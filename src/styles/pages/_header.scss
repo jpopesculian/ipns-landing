@@ -1,2 +1,40 @@
 #header-page {
+
+    .content {
+        display: table;
+    }
+
+    .hero-content {
+        color: #FFF;
+        width: 50%;
+        display: table-cell;
+        vertical-align: middle;
+        overflow: auto;
+    }
+
+    .hero-text {
+
+        width: 66%;
+        float: right;
+        padding: 2em 2em 0 0;
+
+
+        h1 {
+            font-size: 4em;
+            line-height: 1.2em;
+        }
+
+        h2 {
+            margin-top: .5em;
+            font-weight: 300;
+            font-size: 1.75em;
+            line-height: 1.5em;
+        }
+
+        .action-button {
+            font-size: 1.75em;
+            margin-top: 1.5em;
+        }
+
+    }
 }

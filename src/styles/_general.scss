@@ -1,7 +1,7 @@
 body, html {
   background: $BG_COLOR;
   color: $BLACK;
-  font-family: Roboto, Hevlvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
 section {
@@ -9,9 +9,12 @@ section {
   width: 100%;
 }
 
-%wrap {
+.content, %wrap {
     width: 100%;
-    max-width: 1080px;
+    height: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
 }
 
 #app {

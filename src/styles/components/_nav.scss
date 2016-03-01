@@ -1,0 +1,10 @@
+#main-nav {
+    position: fixed;
+    width: 100%;
+    padding: 2em;
+    z-index: 9999;
+
+    .menu {
+        float: right;
+    }
+}

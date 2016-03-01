@@ -1,0 +1,34 @@
+$default-button-color: #6BAB46;
+
+.button {
+    font-size: 1em;
+    background: $default-button-color;
+    border: none;
+    padding: .5em 1em;
+    color: #FFF;
+    text-transform: uppercase;
+    font-family: Roboto;
+    border-radius: .25em;
+    border-bottom: .25em darken($default-button-color, 10) solid;
+    position: relative;
+    transition: all .1s linear;
+
+    &:hover {
+        margin-top: .15em;
+        cursor: pointer;
+        border-bottom: .15em darken($default-button-color, 10) solid;
+    }
+
+    &.clear, &.plain {
+        border: .12em rgba(0,0,0,0) solid;
+        background: rgba(0,0,0,0);
+
+        &:hover {
+            margin-top: 0;
+        }
+    }
+
+    &.clear {
+        border-color: #FFF;
+    }
+}

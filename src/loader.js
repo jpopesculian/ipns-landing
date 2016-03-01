@@ -56,7 +56,10 @@ window._onLoad = (function(window, document) {
   };
   window.WebFont.load({
     google: {
-      families: ['Roboto']
+      families: [
+          'Roboto:300,400,500', 
+          'Oswald'
+      ]
     }
   });
 }(window));
