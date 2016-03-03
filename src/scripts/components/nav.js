@@ -16,8 +16,16 @@ const view = (state$, DOM) => {
   const logo = Logo({DOM, props$: Observable.just({
     white: true
   })})
-  const mainButton = Button({DOM, props$: Observable.just({text: "Register", clear: true})})
-  const altButton = Button({DOM, props$: Observable.just({text: "Login", plain: true})})
+  const mainButton = Button({DOM, props$: Observable.just({
+      text: "Register", 
+      clear: true, 
+      action: "primary"
+  })})
+  const altButton = Button({DOM, props$: Observable.just({
+      text: "Login", 
+      plain: true, 
+      action: "secondary"
+  })})
   return state$
     .withLatestFrom(
         logo.DOM, 

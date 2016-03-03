@@ -12,7 +12,7 @@ const model = (actions) => {
 }
 
 const view = (state$, DOM) => {
-  const button = Button({DOM, props$: Observable.just({text: "Register Now"})})
+  const button = Button({DOM, props$: Observable.just({text: "Register Now", action: "primary"})})
   return state$
     .withLatestFrom(button.DOM, (state, buttonVTree) => {
         return (

@@ -3,32 +3,40 @@ import isolate from '@cycle/isolate'
 import {Observable} from 'rx'
 
 const intent = (DOM) => {
-  return {}
+    return {}
 }
 
 const model = (actions, props$) => {
-  return props$
+    return props$
 }
 
-const getButtonClasses = (state) => {
+const getClasses = (state) => {
     let classes = "button"
     if (state.clear) { classes += " clear" }
     if (state.plain) { classes += " plain" }
     return classes
 }
 
+const getAction = (state) => {
+    return state.action || "default"
+}
+
 const view = (state$) => {
   return state$.map((state) => {
+    const attributes = {
+        "data-action": getAction(state)
+    }
     return (
-	<button className={getButtonClasses(state)}>
-        {state.text}
-	</button>
+        <button attributes={attributes} className={getClasses(state)}>
+            {state.text}
+        </button>
     )
   })
 }
 
 const Button = ({DOM, props$}) => {
-  const state$ = model(intent(DOM), props$)
+  const actions = intent(DOM)
+  const state$ = model(actions, props$)
   return {
     value$: state$,
     DOM: view(state$)
