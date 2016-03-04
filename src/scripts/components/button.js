@@ -19,10 +19,14 @@ const getClasses = (state) => {
     return classes
 }
 
+const getType = (state) => {
+    return state.type || "button"
+}
+
 const view = (state$) => {
   return state$.map((state) => {
     return (
-        <button className={getClasses(state)}>
+        <button className={getClasses(state)} type={getType(state)}>
             {state.text}
         </button>
     )

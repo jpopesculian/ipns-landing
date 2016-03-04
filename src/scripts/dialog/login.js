@@ -1,6 +1,7 @@
 import {hJSX} from '@cycle/dom'
 import isolate from '@cycle/isolate'
 import {Observable} from 'rx'
+import Input from 'app/components/input'
 
 const intent = (DOM) => {
   return {}
@@ -12,10 +13,13 @@ const model = (actions) => {
 
 const view = (state$, components, DOM, History) => {
   return state$
-    .map((state) => {
+    .combineLatest(components.emailInput.DOM, (state, emailInputVTree) => {
         return (
         <div id="login-dialog" className="dialog-form">
             <h3>Login</h3>
+            <form>
+                {emailInputVTree}
+            </form>
         </div>
         )
     })
@@ -26,7 +30,13 @@ const history = (components, History) => {
 }
 
 const createComponents = (state$, DOM, History) => {
-    return {}
+    const emailInputProps$ = Observable.just({
+        placeholder: "email", 
+        type: "email"
+    })
+    return {
+        emailInput: isolate(Input)({DOM, History, props$: emailInputProps$})
+    }
 }
 
 const LoginDialog = ({DOM, prop$, History}) => {

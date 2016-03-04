@@ -57,8 +57,8 @@ window._onLoad = (function(window, document) {
   window.WebFont.load({
     google: {
       families: [
-          'Roboto:300,400,500', 
-          'Oswald'
+          'Roboto:100,300,400,500', 
+          // 'Oswald'
       ]
     }
   });

@@ -20,6 +20,7 @@ const model = (action$) => {
 const view = (state$, components, DOM, History) => {
   const pathname$ = History
     .map((event) => event.pathname.replace(/^\//, ""))
+  pathname$.subscribe((pathname) => document.body.className = pathname ? "blur" : "")
   return state$
 		.combineLatest(
 			pathname$, 
