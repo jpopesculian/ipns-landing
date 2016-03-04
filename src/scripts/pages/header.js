@@ -11,10 +11,9 @@ const model = (actions) => {
   return Observable.just({})
 }
 
-const view = (state$, DOM) => {
-  const button = Button({DOM, props$: Observable.just({text: "Register Now", action: "primary"})})
+const view = (state$, components, DOM, History) => {
   return state$
-    .withLatestFrom(button.DOM, (state, buttonVTree) => {
+    .withLatestFrom(components.button.DOM, (state, buttonVTree) => {
         return (
         <section id="header-page">
             <div className="content">
@@ -33,11 +32,24 @@ const view = (state$, DOM) => {
     })
 }
 
-const HeaderPage = ({DOM, prop$}) => {
+const history = (components, History) => {
+    return components.button.History
+}
+
+const createComponents = (state$, DOM, History) => {
+    const props$ = Observable.just({text: "Register Now", action: "register"})
+    return {
+        button: isolate(Button)({DOM, History, props$})
+    }
+}
+
+const HeaderPage = ({DOM, prop$, History}) => {
   const state$ = model(intent(DOM))
+  const components = createComponents(state$, DOM, History)
   return {
     value$: state$,
-    DOM: view(state$, DOM)
+    DOM: view(state$, components, DOM, History),
+    History: history(components, History)
   }
 }
 

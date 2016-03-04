@@ -1,53 +1,72 @@
 import Cycle from '@cycle/core'
 import {makeDOMDriver, hJSX} from '@cycle/dom'
+import {makeHistoryDriver} from '@cycle/history'
 import {Observable} from 'rx'
 import HeaderPage from 'app/pages/header'
 import Nav from 'app/components/nav'
+import DialogController from 'app/dialog/controller'
 
 const intent = (DOM) => {
-    const clicks = DOM.events('click').map(ev => ev.target)
-    const actionableClicks = clicks.filter((elem) => elem.attributes['data-action'])
-    const primaryAction = actionableClicks.filter((elem) => elem.attributes['data-action'].value == "primary")
-    const secondaryAction = actionableClicks.filter((elem) => elem.attributes['data-action'].value == "secondary")
-    return {primaryAction, secondaryAction}
+    return {}
 }
 
 const model = (actions) => {
-    return actions.primaryAction.map((s) => console.dir(s))
+    return Observable.just({})
 }
 
-const view = (state$, DOM) => {
-  const nav = Nav({DOM})
-  const headerPage = HeaderPage({DOM})
+const view = (state$, components, DOM, History) => {
   return Observable.just({}).concat(state$)
     .combineLatest(
-        nav.DOM,
-        headerPage.DOM, 
+        components.nav.DOM,
+        components.headerPage.DOM, 
+        components.dialog.DOM,
         (
             state,
             navVTree, 
-            headerVTree
+            headerVTree,
+            dialogVTree
         ) => {
         return (
             <div>
                 {navVTree}
                 {headerVTree}
+                {dialogVTree}
             </div>
         )
     })
 }
 
-const main = ({DOM}) => {
+const history = (actions, components, History) => {
+    return components.nav.History
+        .merge(components.headerPage.History)
+        .merge(components.dialog.History)
+}
+
+const createComponents = (state$, DOM, History) => {
+    const navProps$ = Observable.just({})
+    const headerPageProps$ = Observable.just({})
+    const dialogProps$ = Observable.just({})
+    return {
+        nav: Nav({DOM, History, props$: navProps$}),
+        headerPage: HeaderPage({DOM, History, props$: headerPageProps$}),
+        dialog: DialogController({DOM, History, props$: dialogProps$}),
+    }
+}
+
+const main = ({DOM, History}) => {
   const actions = intent(DOM)
   const state$ = model(actions)
+  const components = createComponents(state$, DOM, History)
   return {
-    DOM: view(state$, DOM)
+    DOM: view(state$, components, DOM, History),
+    History: history(actions, components, History)
   }
 }
 
 const bootstrap = (selector) => {
   Cycle.run(main, {
-    DOM: makeDOMDriver(selector)
+    DOM: makeDOMDriver(selector),
+    History: makeHistoryDriver({hash: true})
   })
 }
 

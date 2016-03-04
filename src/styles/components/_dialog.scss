@@ -1,0 +1,97 @@
+#dialog {
+    $dialog-fade-in-time: .5s;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: rgba(255, 255, 255, 0);
+    transition: all $dialog-fade-in-time linear;
+
+    &.open {
+        display: table;
+        z-index: 99999999;
+        background-color: rgba(255, 255, 255, 0.5);
+        animation: bg-fade-in $dialog-fade-in-time linear;
+    }
+
+    .dialog-wrap {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+        height: 100%;
+    }
+
+    .dialog-content {
+        margin: 0 auto;
+        width: 35em;
+        max-width: 100%;
+        min-height: 20em;
+        background: #FFF;
+        box-shadow: rgba(0,0,0,.1) 0 0 1em;
+        position: relative;
+        top: -2em;
+        opacity: 0;
+        transition: all $dialog-fade-in-time ease-in-out;
+
+        &.open {
+            animation: dialog-fade-in $dialog-fade-in-time ease-in-out;
+            top: 0;
+            opacity: 1;
+        }
+    }
+
+    .dialog-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+		top: .5em;
+		right: 1.25em;
+		transform: scaleX(1.4);
+
+
+        &:after {
+            content: "x";
+			font-size: 1.75em;
+			color: #333;
+			font-weight: 100;
+        }
+
+		&:hover {
+			cursor: pointer;
+		}
+    }
+
+	.dialog-form {
+		padding: 1em;
+		
+		h3 {
+			font-size: 2em;
+			font-weight: 300;
+			color: #666;
+		}
+	}
+}
+
+@keyframes bg-fade-in {
+    from {
+        background: rgba(255, 255, 255, 0);
+    }
+    to {
+
+        background: rgba(255, 255, 255, 0.5);
+    }
+}
+
+@keyframes dialog-fade-in {
+    from {
+        top: -2em;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}

@@ -41,12 +41,11 @@
       "baseURL": "src"
     },
     "dependencies": {
-      "@cycle/core": "npm:@cycle/core@^6.0.0",
-      "@cycle/dom": "npm:@cycle/dom@^9.0.2",
-      "@cycle/isolate": "npm:@cycle/isolate@^1.2.0",
-      "event-emitter": "npm:event-emitter@^0.3.4",
-      "immutable": "npm:immutable@^3.7.6",
-      "rx": "npm:rx@^4.0.7"
+      "@cycle/core": "npm:@cycle/core@6.0.3",
+      "@cycle/dom": "npm:@cycle/dom@9.1.0",
+      "@cycle/history": "npm:@cycle/history@1.1.0",
+      "@cycle/isolate": "npm:@cycle/isolate@1.2.0",
+      "rx": "npm:rx@^4.0.8"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",

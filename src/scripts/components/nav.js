@@ -12,30 +12,17 @@ const model = (actions) => {
   return Observable.just({})
 }
 
-const view = (state$, DOM) => {
-  const logo = Logo({DOM, props$: Observable.just({
-    white: true
-  })})
-  const mainButton = Button({DOM, props$: Observable.just({
-      text: "Register", 
-      clear: true, 
-      action: "primary"
-  })})
-  const altButton = Button({DOM, props$: Observable.just({
-      text: "Login", 
-      plain: true, 
-      action: "secondary"
-  })})
+const view = (state$, components, DOM, History) => {
   return state$
     .withLatestFrom(
-        logo.DOM, 
-        mainButton.DOM,
-        altButton.DOM,
+        components.logo.DOM, 
+        components.mainButton.DOM,
+        components.altButton.DOM,
         (
-        state,
-        logoVTree,
-        altButtonVTree,
-        mainButtonVTree
+            state,
+            logoVTree,
+            altButtonVTree,
+            mainButtonVTree
         ) => {
             return (
             <nav id="main-nav">
@@ -51,11 +38,36 @@ const view = (state$, DOM) => {
     })
 }
 
-const MainNav = ({DOM, prop$}) => {
+const history = (components, History) => {
+    return components.mainButton.History.merge(components.altButton.History)
+}
+
+const createComponents = (state$, DOM, History) => {
+    const logoProps$ = Observable.just({ white: true })
+    const mainButtonProps$ = Observable.just({
+        text: "Register", 
+        clear: true, 
+        action: "register"
+    })
+    const altButtonProps$ = Observable.just({
+        text: "Login", 
+        plain: true, 
+        action: "login"
+    })
+    return {
+        logo: Logo({DOM, History, props$: logoProps$}),
+        mainButton: isolate(Button)({DOM, History, props$: mainButtonProps$}),
+        altButton: isolate(Button)({DOM, History, props$: altButtonProps$}),
+    }
+}
+
+const MainNav = ({DOM, prop$, History}) => {
   const state$ = model(intent(DOM))
+  const components = createComponents(state$, DOM, History)
   return {
     value$: state$,
-    DOM: view(state$, DOM)
+    DOM: view(state$, components, DOM, History),
+    History: history(components, History)
   }
 }
 

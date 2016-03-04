@@ -3,10 +3,12 @@ import isolate from '@cycle/isolate'
 import {Observable} from 'rx'
 
 const intent = (DOM) => {
-    return {}
+    return Observable.merge(
+        DOM.events('click').map((ev) => ({type: "navigate"}))
+    ).share()
 }
 
-const model = (actions, props$) => {
+const model = (action$, props$) => {
     return props$
 }
 
@@ -17,31 +19,32 @@ const getClasses = (state) => {
     return classes
 }
 
-const getAction = (state) => {
-    return state.action || "default"
-}
-
 const view = (state$) => {
   return state$.map((state) => {
-    const attributes = {
-        "data-action": getAction(state)
-    }
     return (
-        <button attributes={attributes} className={getClasses(state)}>
+        <button className={getClasses(state)}>
             {state.text}
         </button>
     )
   })
 }
 
-const Button = ({DOM, props$}) => {
-  const actions = intent(DOM)
-  const state$ = model(actions, props$)
+const history = (action$, state$, History) => {
+    return action$
+        .filter((action) => action.type == "navigate")
+        .withLatestFrom(state$, (event, state) => state.action)
+        .filter((action) => action != undefined)
+}
+
+const Button = ({DOM, props$, History}) => {
+  const action$ = intent(DOM)
+  const state$ = model(action$, props$)
   return {
     value$: state$,
-    DOM: view(state$)
+    DOM: view(state$),
+    History: history(action$, state$, History)
   }
 }
 
-export default isolate(Button)
+export default Button
 

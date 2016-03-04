@@ -16,7 +16,7 @@
   Pluto : ~90 580 days (~248 years)
 */
 
-$year-in-second : 7; 
+$year-in-second : 30; 
 
 @function revolution($pl-year-in-days){
   @return $pl-year-in-days * $year-in-second / 365.2563 + s  //Earth reference
