@@ -13,12 +13,20 @@ const model = (actions) => {
 
 const view = (state$, components, DOM, History) => {
   return state$
-    .combineLatest(components.emailInput.DOM, (state, emailInputVTree) => {
+    .combineLatest(
+        components.emailInput.DOM, 
+        components.passwordInput.DOM, 
+        (
+            state, 
+            emailInputVTree,
+            passwordInputVTree
+        ) => {
         return (
         <div id="login-dialog" className="dialog-form">
             <h3>Login</h3>
             <form>
                 {emailInputVTree}
+                {passwordInputVTree}
             </form>
         </div>
         )
@@ -31,11 +39,16 @@ const history = (components, History) => {
 
 const createComponents = (state$, DOM, History) => {
     const emailInputProps$ = Observable.just({
-        placeholder: "email", 
+        label: "email",
         type: "email"
     })
+    const passwordInputProps$ = Observable.just({
+        label: "password",
+        type: "password"
+    })
     return {
-        emailInput: isolate(Input)({DOM, History, props$: emailInputProps$})
+        emailInput: isolate(Input)({DOM, History, props$: emailInputProps$}),
+        passwordInput: isolate(Input)({DOM, History, props$: passwordInputProps$})
     }
 }
 

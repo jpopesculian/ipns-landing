@@ -12,6 +12,7 @@ $default-button-color: #6BAB46;
     border-bottom: .25em darken($default-button-color, 10) solid;
     position: relative;
     transition: all .1s linear;
+    font-weight: 300;
 
     &:hover {
         margin-top: .15em;

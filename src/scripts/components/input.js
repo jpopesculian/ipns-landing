@@ -4,44 +4,52 @@ import {Observable} from 'rx'
 
 const intent = (DOM) => {
     return Observable.merge(
-        DOM.events('input').share()
+        DOM.events('input').map((ev) => ({type: "data", value: ev.target.value})),
+        DOM.events('focus').map((ev) => ({type: "focus", value: true})),
+        DOM.events('blur').map((ev) => ({type: "focus", value: false}))
     ).share()
 }
 
 const model = (action$, props$) => {
     const initialValue$ = props$.map(props => props.initial).first()
-    const value$ = initialValue$.concat(action$.map(ev => ev.target.value))
+    const newValue$ = action$
+        .filter((action) => action.type == "data")
+        .map((action) => action.value)
+    const value$ = initialValue$.concat(newValue$)
+
+    const focus$ = action$
+        .filter((action) => action.type == "focus")
+        .map((action) => action.value)
+        .startWith(false)
+
     return props$
-        .combineLatest(value$, (props, value) => {
+        .combineLatest(value$, focus$, (props, value, focus) => {
             let state = props
             state.value = value
+            state.focus = focus
             return state
         })
 }
 
 const getClasses = (state) => {
     let classes = "input"
-    if (state.clear) { classes += " clear" }
-    if (state.plain) { classes += " plain" }
+    if (state.focus) { classes += " focused" }
+    if (state.value) { classes += " filled" }
     return classes
-}
-
-const getType = (state) => {
-    return state.type || "button"
-}
-
-const getPlaceholder = (state) => {
-    return state.placeholder || ""
 }
 
 const view = (state$) => {
   return state$.map((state) => {
+    const name = state.name || ""
+    const type = state.type || "text"
     return (
-        <input 
-            className={getClasses(state)}
-            type={getType(state)}
-            placeholder={getPlaceholder(state)}>
-        </input>
+        <div className={getClasses(state)}>
+            <label for={name}>{state.label}</label>
+            <input 
+                type={type}
+                name={name}>
+            </input>
+        </div>
     )
   })
 }

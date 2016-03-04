@@ -1,0 +1,77 @@
+.input {
+    $trans-time: .2s;
+    $trans-func: ease-in-out;
+    $focus-color: #88D659;
+    $unfocus-color: #CCC;
+
+    position: relative;
+    padding-top: 1.25em;
+
+    input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid $unfocus-color;
+        background: rgba(0,0,0,0);
+        line-height: 1.5em;
+        padding: .5em;
+        font-size: 1em;
+        color: #333;
+    }
+
+    label {
+        font-size: 1em;
+        position: relative;
+        top: 1.75em;
+        left: .5em;
+        transition: all $trans-time $trans-func;
+        pointer-events: none;
+        font-weight: 300;
+        text-transform: uppercase;
+    }
+
+    &:after {
+        content: "";
+        height: 1px;
+        width: 0;
+        background-color: $unfocus-color;
+        opacity: 0;
+        display: block;
+        transition: all $trans-time $trans-func;
+    }
+
+    &.focused, &.filled {
+        label {
+            top: 0;
+            left: 0;
+            font-size: .75em;
+            line-height: 1.25em;
+        }
+    }
+
+    &.focused, &.filled {
+
+        &:after {
+            opacity: 1;
+            width: 100%;
+        }
+    }
+
+    &.focused {
+        input {
+            border-color: $focus-color;
+        }
+
+        label {
+            color: $focus-color;
+        }
+
+        &:after {
+            background-color: $focus-color;
+        }
+    }
+
+}
+
+form {
+    margin-top: 1em;
+}
