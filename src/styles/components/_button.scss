@@ -14,13 +14,14 @@ $default-button-color: #6BAB46;
     transition: all .1s linear;
     font-weight: 300;
 
-    &:hover {
+    &:hover, &:focus {
         margin-top: .15em;
         cursor: pointer;
         border-bottom: .15em darken($default-button-color, 10) solid;
     }
 
     &.clear, &.plain {
+        color: #333;
         border: .12em rgba(0,0,0,0) solid;
         background: rgba(0,0,0,0);
 
@@ -30,6 +31,13 @@ $default-button-color: #6BAB46;
     }
 
     &.clear {
-        border-color: #FFF;
+        border-color: #333;
+    }
+
+    &.white {
+        color: #FFF;
+        &.clear {
+            border-color: #FFF;
+        }
     }
 }

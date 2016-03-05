@@ -1,0 +1,17 @@
+form {
+    margin: .5em 0;
+}
+
+.form-buttons {
+    margin-top: 2.5em;
+    overflow: auto;
+
+    .button {
+        float: left;
+
+        &:first-child {
+            float: right;
+            margin-right: .5em;
+        }
+    }
+}

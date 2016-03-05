@@ -2,6 +2,7 @@ import {hJSX} from '@cycle/dom'
 import isolate from '@cycle/isolate'
 import {Observable} from 'rx'
 import Input from 'app/components/input'
+import Button from 'app/components/button'
 
 const intent = (DOM) => {
   return {}
@@ -16,10 +17,14 @@ const view = (state$, components, DOM, History) => {
     .combineLatest(
         components.emailInput.DOM, 
         components.passwordInput.DOM, 
+        components.submitButton.DOM,
+        components.loginButton.DOM,
         (
             state, 
             emailInputVTree,
-            passwordInputVTree
+            passwordInputVTree,
+            submitButtonVTree,
+            loginButtonVTree
         ) => {
         return (
         <div id="login-dialog" className="dialog-form">
@@ -27,6 +32,10 @@ const view = (state$, components, DOM, History) => {
             <form>
                 {emailInputVTree}
                 {passwordInputVTree}
+                <div className="form-buttons">
+                    {submitButtonVTree}
+                    {loginButtonVTree}
+                </div>
             </form>
         </div>
         )
@@ -46,9 +55,20 @@ const createComponents = (state$, DOM, History) => {
         label: "password",
         type: "password"
     })
+    const submitButtonProps$ = Observable.just({
+        text: "Login", 
+        type: "submit"
+    })
+    const loginButtonProps$ = Observable.just({
+        text: "Register", 
+        plain: true, 
+        action: "register"
+    })
     return {
         emailInput: isolate(Input)({DOM, History, props$: emailInputProps$}),
-        passwordInput: isolate(Input)({DOM, History, props$: passwordInputProps$})
+        passwordInput: isolate(Input)({DOM, History, props$: passwordInputProps$}),
+        submitButton: isolate(Button)({DOM, History, props$: submitButtonProps$}),
+        loginButton: isolate(Button)({DOM, History, props$: loginButtonProps$})
     }
 }
 

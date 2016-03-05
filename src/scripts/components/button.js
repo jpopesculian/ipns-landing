@@ -16,6 +16,7 @@ const getClasses = (state) => {
     let classes = "button"
     if (state.clear) { classes += " clear" }
     if (state.plain) { classes += " plain" }
+    if (state.white) { classes += " white" }
     return classes
 }
 

@@ -47,11 +47,13 @@ const createComponents = (state$, DOM, History) => {
     const mainButtonProps$ = Observable.just({
         text: "Register", 
         clear: true, 
+        white: true,
         action: "register"
     })
     const altButtonProps$ = Observable.just({
         text: "Login", 
         plain: true, 
+        white: true,
         action: "login"
     })
     return {

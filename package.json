@@ -44,7 +44,9 @@
       "@cycle/core": "npm:@cycle/core@6.0.3",
       "@cycle/dom": "npm:@cycle/dom@9.1.0",
       "@cycle/history": "npm:@cycle/history@1.1.0",
+      "@cycle/http": "npm:@cycle/http@^8.2.0",
       "@cycle/isolate": "npm:@cycle/isolate@1.2.0",
+      "@cycle/storage": "npm:@cycle/storage@^2.0.3",
       "rx": "npm:rx@^4.0.8"
     },
     "devDependencies": {
